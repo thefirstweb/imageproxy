@@ -827,6 +827,13 @@
 			"revisionTime": "2018-02-01T19:38:14Z"
 		},
 		{
+			"checksumSHA1": "aYeO2Rza/vUiI+bP8HWJ266+eAY=",
+			"origin": "imageproxy/vendor/imageproxy",
+			"path": "imageproxy",
+			"revision": "a3e2e0538ff0c0d611e79c417a2cce36d157f3cc",
+			"revisionTime": "2018-04-02T11:55:16Z"
+		},
+		{
 			"checksumSHA1": "cBdDkft9ir+lyLbeRQ4zCAoR0AY=",
 			"path": "willnorris.com/go/gifresize",
 			"revision": "6a222229fa0697e6da06ec80f8ffd0ada346669d",
