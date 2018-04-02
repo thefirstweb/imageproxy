@@ -39,9 +39,12 @@ how to update depedencies:(govendor) : build image proxy 不depends on willnorri
 3. run govendor (ref: document https://vonalex.github.io/2017/05/02/go%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86-govendor/)
    download govendor (go get -u github.com/kardianos/govendor) need  create another go-workspace
 
-4. run govendor update(我們自己run govendor的commit log : git show 588e3a2f2e9c669705b54ca0e2f649ddffb27d92)
+4. run govendor update(我們自己run govendor的commit log :
    cd $GOPATH/src/imageproxy
    ~/govendor/bin/govendor update imageproxy
+
+   (git show 588e3a2f2e9c669705b54ca0e2f649ddffb27d92
+    git show b9fa94f8a37fb2226d1ca0171fda2066fbf6d3c0)
 
 5. build binary
    $GO build imageproxy/cmd/imageproxy   # GO must be 1.10.1 and above
