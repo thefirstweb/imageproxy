@@ -32,7 +32,7 @@ import (
 	"time"
 
 	"github.com/gregjones/httpcache"
-	tphttp "willnorris.com/go/imageproxy/third_party/http"
+	tphttp "imageproxy/third_party/http"
 
 	"crypto/tls"
 	"net"
