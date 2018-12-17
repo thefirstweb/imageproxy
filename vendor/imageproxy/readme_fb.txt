@@ -1,11 +1,20 @@
 FB customized imageproxy
 
+基本概念:
+1. imageproxy package是imageproxy core library
+2. imageproxy/cmd/imageporxy 才是 imageproxy main
+3. 如果祇改imageproxy main(ie,加參數, print debug informaion)直接build 就好($GO build imageproxy/cmd/imageproxy
+4. 如果改imageproxy (imageproxy的dependent, 例如:取消ssl certifiate check), 需要:
+   4.1 govendor update imageporxy, 
+   4.2 $GO build imageproxy/cmd/imageproxy
+
+
 branch managment:
 1. master : should be align with upstream master
 2. fb_master : feebee's master (our binary will built on this branch)
 3. fb_<feature_branch> : new feature added by feebee
 
-upgrade version:
+upgrade version to upstream:
 1. merge upstream/master into origin/master
 
 first time build a imageproxy binary from fb_master:
@@ -27,6 +36,8 @@ first time build a imageproxy binary from fb_master:
    $GO build imageproxy/cmd/imageproxy   # GO must be 1.10.1 and above
 
 
+update imageproxy
+
 how to update depedencies:(govendor) : build image proxy 不depends on willnorris.com/go的版本
  - 因為git clone 出來的imageproxy default是會直接depends willnorris.com/go的版本, 所以直接改git的source沒有用, 因為他直接depends on willnorris.com/go
  - 以下步驟會decouple 直接depends on willnorris.com/go的版本,改depend on git的版本
@@ -39,9 +50,12 @@ how to update depedencies:(govendor) : build image proxy 不depends on willnorri
 3. run govendor (ref: document https://vonalex.github.io/2017/05/02/go%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86-govendor/)
    download govendor (go get -u github.com/kardianos/govendor) need  create another go-workspace
 
-4. run govendor update
+4. run govendor update(我們自己run govendor的commit log :
    cd $GOPATH/src/imageproxy
    ~/govendor/bin/govendor update imageproxy
+
+   (git show 588e3a2f2e9c669705b54ca0e2f649ddffb27d92
+    git show b9fa94f8a37fb2226d1ca0171fda2066fbf6d3c0)
 
 5. build binary
    $GO build imageproxy/cmd/imageproxy   # GO must be 1.10.1 and above
