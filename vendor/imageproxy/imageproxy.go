@@ -338,10 +338,9 @@ func (t *TransformingTransport) RoundTrip(req *http.Request) (*http.Response, er
 	opt := ParseOptions(req.URL.Fragment)
 
 	img, err := Transform(b, opt)
-	if img == nil || err != nil {
+	if err != nil {
 		log.Printf("error transforming image: %v", err)
-        return nil, err
-		//img = b
+		img = b
 	}
 
 	// replay response with transformed image and updated content length
