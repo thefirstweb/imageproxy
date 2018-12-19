@@ -30,6 +30,7 @@ import (
 	"net/url"
 	"strings"
 	"time"
+    "unicode/utf8"
 
 	"github.com/gregjones/httpcache"
 	tphttp "imageproxy/third_party/http"
@@ -337,12 +338,16 @@ func (t *TransformingTransport) RoundTrip(req *http.Request) (*http.Response, er
 
 	opt := ParseOptions(req.URL.Fragment)
 
-	img, err := Transform(b, opt)
-	if img == nil || err != nil {
-        log.Printf("--- error transforming image: %v (url %v)", err, req.URL)
-        return nil, err
-		img = b
-	}
+    img, err := Transform(b, opt)
+    if img == nil || err != nil {
+        if utf8.Valid(b) {
+            log.Printf("--- error transforming mage and body is utf-8 char  response HTTP 500: ", err, req.URL)
+            return nil, err
+        }
+
+        log.Printf("--- error transforming image and body is binary return original image : %v (url %v)", err, req.URL)
+        img = b
+    }
 
 	// replay response with transformed image and updated content length
 	buf := new(bytes.Buffer)

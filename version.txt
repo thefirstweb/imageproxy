@@ -2,13 +2,11 @@
 * 不check https certificate
 
 1.1 fb_ignore_ssl_certificate--return-error-if-error
-* 如果圖轉壞了, 則return 500
+  * 如果轉圖失敗, 可以再判斷body是不是text, 如果是text則回傳HTTP 500, 如果是binary就可回傳原圖.
 (原本是如果圖轉壞了, return 原圖, 但是大潤發擋抓的時候, 是return html code, 
  imageproxy轉圖會失敗, 如果imageproxy失敗回傳原圖話, google就會cache到html code, 
  browser 會破圖) 
-  現在改為如果圖轉失敗, 回傳500
 
-  比較好的作法是, 如果轉圖失敗, 可以再判斷body是不是text, 如果是text則回傳HTTP 500, 如果是binary就可回傳原圖.
 
 
 
