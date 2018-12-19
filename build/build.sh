@@ -39,9 +39,10 @@ build() {
 
     go_rev=$($GOHOME/bin/go version)
     go_rev=${go_rev//\ /__}
+    build_host=$(hostname)
     # main.go_version_str="$go_rev"
 #    $GOHOME/bin/go build -ldflags "-X main.git_version_str=${git_rev} -X main.go_version_str=${go_rev}" $project/cmd/$project
-    $GOHOME/bin/go install -ldflags "-X main.git_version_str=${git_rev} -X main.go_version_str=${go_rev}" $project/cmd/$project
+    $GOHOME/bin/go install -ldflags "-X main.git_version_str=${build_host}@${git_rev} -X main.go_version_str=${go_rev}" $project/cmd/$project
 }
 
 
