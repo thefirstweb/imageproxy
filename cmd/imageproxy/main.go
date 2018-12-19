@@ -51,6 +51,8 @@ var scaleUp = flag.Bool("scaleUp", false, "allow images to scale beyond their or
 var timeout = flag.Duration("timeout", 0, "time limit for requests served by this proxy")
 var verbose = flag.Bool("verbose", false, "print verbose logging messages")
 var version = flag.Bool("version", false, "Deprecated: this flag does nothing")
+var git_version_str  string
+var go_version_str   string
 
 func init() {
 	flag.Var(&cache, "cache", "location to cache images (see https://github.com/willnorris/imageproxy#cache)")
@@ -95,7 +97,7 @@ func main() {
 		Handler: p,
 	}
 
-	fmt.Printf("imageproxy listening on %s\n", server.Addr)
+    fmt.Printf("imageproxy listening on %s (git sha1:%s go version:%s)\n", server.Addr, git_version_str, go_version_str)
 	log.Fatal(server.ListenAndServe())
 }
 

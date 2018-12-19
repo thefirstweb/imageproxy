@@ -92,8 +92,10 @@ func Transform(img []byte, opt Options) ([]byte, error) {
 			quality = defaultQuality
 		}
 
+        log.Printf("-in tranformimage")
 		m = transformImage(m, opt)
 		err = jpeg.Encode(buf, m, &jpeg.Options{Quality: quality})
+        log.Printf("-out tranformimage")
 		if err != nil {
 			return nil, err
 		}

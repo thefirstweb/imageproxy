@@ -35,7 +35,6 @@ import (
 	tphttp "imageproxy/third_party/http"
 
 	"crypto/tls"
-	"net"
 )
 
 // Proxy serves image requests.
@@ -77,21 +76,15 @@ type Proxy struct {
 // be used.
 func NewProxy(transport http.RoundTripper, cache Cache) *Proxy {
 	if transport == nil {
-		var DefaultTransport http.RoundTripper = &http.Transport{
-			Proxy: http.ProxyFromEnvironment,
-			DialContext: (&net.Dialer{
-				Timeout:   30 * time.Second,
-				KeepAlive: 30 * time.Second,
-				DualStack: true,
-			}).DialContext,
-			MaxIdleConns:          100,
-			IdleConnTimeout:       90 * time.Second,
-			TLSHandshakeTimeout:   10 * time.Second,
-			ExpectContinueTimeout: 1 * time.Second,
-			TLSClientConfig:       &tls.Config{InsecureSkipVerify: true},
-		}
-		transport = DefaultTransport
+        transport = http.DefaultTransport
 	}
+
+    var defaultTransport, ok = transport.(* http.Transport)
+    if ok {
+        defaultTransport.TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
+        transport = defaultTransport
+    }
+
 	if cache == nil {
 		cache = NopCache
 	}
@@ -345,8 +338,9 @@ func (t *TransformingTransport) RoundTrip(req *http.Request) (*http.Response, er
 	opt := ParseOptions(req.URL.Fragment)
 
 	img, err := Transform(b, opt)
-	if err != nil {
-		log.Printf("error transforming image: %v", err)
+	if img == nil || err != nil {
+        log.Printf("--- error transforming image: %v (url %v)", err, req.URL)
+        return nil, err
 		img = b
 	}
 
