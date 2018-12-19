@@ -1,3 +1,6 @@
+1. version history see version.txt
+2. how to build see BUILD
+
 FB customized imageproxy
 ref: https://golang.org/doc/code.html
 ref: https://blog.golang.org/organizing-go-code
