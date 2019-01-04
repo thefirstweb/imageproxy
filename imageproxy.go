@@ -340,8 +340,14 @@ func (t *TransformingTransport) RoundTrip(req *http.Request) (*http.Response, er
 
     img, err := Transform(b, opt)
     if img == nil || err != nil {
-        if utf8.Valid(b) {
-            log.Printf("--- error transforming mage and body is utf-8 char  response HTTP 500: $v (url %v) ", err, req.URL)
+        samplelen := len(b)
+        if samplelen > 10 {
+            samplelen = 10
+        }
+        subb := b[0:samplelen]
+
+        if utf8.Valid(subb) {
+            log.Printf("--- error transforming mage and sub body is utf-8 char response HTTP 500: %v (url %v) (body %v)", err, req.URL, subb)
             return nil, err
         }
 
