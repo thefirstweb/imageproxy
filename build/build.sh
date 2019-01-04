@@ -5,31 +5,9 @@ dname=$(readlink -f $(dirname $0))
 
 export GOVENDOR=${GOVENDOR:="$dname"}
 export GOHOME=${GOHOME:="/home/bclow/tmp/go1.10/go"}
-
-cd $dname/..
 export GOPATH="$dname/../../.."
+source $dname/libbuild.sh
 
-git_dirty() {
-    official="$1"
-    project="$2"
-
-    if test "$official" = "1"
-    then
-        if test ! -z "$(git status --porcelain)"
-        then
-            git status
-            echo ""
-            echo ""
-            echo ""
-            echo "git status is not clean"
-            exit 1
-        fi
-    fi
-}
-
-vendor_update() {
-    $GOVENDOR/govendor update $project
-}
 
 build() {
     project="$1"
@@ -48,7 +26,8 @@ build() {
 
 official=${1:-"1"}
 project=${2:-"imageproxy"}
-git_dirty $official $project  && build $project 
+cd $dname/..
+git_dirty $official $project && build $project 
 
 
 
