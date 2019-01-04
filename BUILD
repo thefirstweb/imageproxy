@@ -1,3 +1,23 @@
+modify
+------
+1. code modify for imageproxy vs cmd/imageproxy/main.go
+1.1 imageproxy
+1.1.1 change code
+1.1.2 build/vendor_update.sh 0  ---> compiling will only depend on vendor/imageproxy/imageproxy.go (instead of imageproxy.go)
+1.1.3 build/build.sh 0
+1.1.4 repeat 1.1.1 -> 1.1.3 
+1.1.5 commit everything 
+1.1.6 checkout to another directory and run build.sh without 0
+
+1.2 cmd/imageproxy/main.go(no need vendor_update.sh)
+1.2.1 change code
+1.2.2 build/build.sh 0
+1.2.3 repeat 1.2.1 -> 1.2.2
+1.1.5 commit everything 
+1.1.6 checkout to another directory and run build.sh without 0
+
+
+
 fully build
 -----------
 1. create a workspace_directory, ie /home/bclow/go_workspace
@@ -16,16 +36,6 @@ git checkout 1_1__return-500-if-img-error
 5. binary will generate on /home/bclow/go_workspace/bin/imageproxy
 
 
-modify
-------
-1. code modify for imageproxy vs cmd/imageproxy/main.go
-1.1 imageproxy
-1.1.1 change code
-1.1.2 build/vendor_update.sh 0  ---> compiling will only depend on vendor/imageproxy/imageproxy.go (instead of imageproxy.go)
-1.1.3 build/build.sh 0
-1.1.4 repeat 1.1.1 -> 1.1.3 
-1.1.5 commit everything 
-1.1.6 checkout to another directory and run build.sh without 0
 
 test case:
 ----------
